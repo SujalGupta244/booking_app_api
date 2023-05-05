@@ -21,11 +21,11 @@ dbConnect()
 
 
 // Allows us to use any file from public folder into any folder directly
-app.use("/api", express.static(path.join(__dirname,"public"))) // app.use(express.static("public"))
+app.use("/", express.static(path.join(__dirname,"public"))) // app.use(express.static("public"))
 // app.use("/upload", express.static(path.join(__dirname,"public","uploads"))) 
 
 // Route use to show html page directly by backend
-app.use("/api", require('./routes/root'))
+app.use("/", require('./routes/root'))
 
 
 // Middleware that allow to communicate using json format only
@@ -39,14 +39,14 @@ app.use(cors(corsOptions))
 app.use(cookieParser())
 
 // Different Routes for different request from frontend
-app.use("/api/users", require("./routes/userRoutes"))
+app.use("/users", require("./routes/userRoutes"))
 
-app.use('/api/auth', require('./routes/authRoutes'))
+app.use('/auth', require('./routes/authRoutes'))
 
-app.use('/api/upload', require("./routes/uploadRouter"))
+app.use('/upload', require("./routes/uploadRouter"))
 
-app.use('/api/places', require("./routes/placesRouter"))
-app.use('/api/booking', require("./routes/bookingRouter"))
+app.use('/places', require("./routes/placesRouter"))
+app.use('/booking', require("./routes/bookingRouter"))
 
 
 // For any route not known 

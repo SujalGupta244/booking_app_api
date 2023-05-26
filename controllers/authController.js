@@ -87,7 +87,7 @@ const login = asyncHandler(async (req, res) =>{
 
 
 // @desc Refresh
-// @route POST /auth/refresh
+// @route GET /auth/refresh
 // @access Public
 const refresh = asyncHandler(async(req, res) =>{
     const cookies = req.cookies

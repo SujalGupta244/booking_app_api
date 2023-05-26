@@ -13,7 +13,7 @@ router.route('/by-link')
 
 router.route('/direct')
 // .post(uploadDirect)
-.post(uploadToLocal,uploadDirect) // this will upload the incoming images in tmp folder which is inside public folder
+.post(uploadToLocal,uploadDirect) // this will upload the incoming images in tmp folder first and then on S3 bucket which is inside public folder
 
 router.route('/remove')
 .put(removeDirect)

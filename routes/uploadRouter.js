@@ -2,8 +2,10 @@ const express = require("express")
 
 const router = express.Router()
 
-const uploadController = require("../controllers/uploadController")
-const {uploadByLink, uploadDirect, removeDirect} = uploadController
+// const uploadController = require("../controllers/uploadController")
+const uploadCloudinaryController = require("../controllers/uploadCloudinaryController")
+// const {uploadByLink, uploadDirect, removeDirect} = uploadController
+const {uploadByLink, uploadDirect, removeDirect} = uploadCloudinaryController
 
 const {uploadToLocal} = require('../middleware/photosMiddleware')
 

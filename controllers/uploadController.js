@@ -28,7 +28,7 @@ const uploadDirect = asyncHandler(async (req, res) =>{
     }
 
     const uploadedFiles = [];
-
+    console.log(files)
     for(let i = 0;i<req.files.length;i++){
         const fileInfo = req.files[i]
         const {path, originalname, mimetype} = fileInfo

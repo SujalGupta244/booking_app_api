@@ -17,7 +17,7 @@ const placeSchema = new Schema({
         required: true,
     },
     images:{
-        type: [String],
+        type: [Object],
         required: true,
     },
     description:{

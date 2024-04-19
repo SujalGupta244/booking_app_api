@@ -15,7 +15,7 @@ const uploadByLink = asyncHandler(async (req, res) =>{
         url: link,
         dest: newPath
     })
-    const url = await uploadToCloudinary(newPath, newName, mime.lookup(newPath))
+    const url = await uploadToCloudinary(newPath)
     res.json(url)
 })
 
@@ -42,7 +42,6 @@ const uploadDirect = asyncHandler(async (req, res) =>{
 
 const removeDirect = asyncHandler(async(req, res) =>{
     const {id, name} = req.body
-    // if(!id || !name || !fs.existsSync(path.join(__dirname,"..", "public","uploads", name))){
     if(!id || !name ){
         res.status(400).json({message: 'file not found'})
     }
@@ -58,7 +57,7 @@ const removeDirect = asyncHandler(async(req, res) =>{
     place.images = filterImages
     await place.save()
     
-    // Remvoe image from S3 bucket
+    // Remvoe image from cloudinary
     const removeImage = await deleteFromCloudinary(name)
     // console.log(removeImage);
     // console.log((req.body));

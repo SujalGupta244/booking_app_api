@@ -7,7 +7,8 @@ const uploadCloudinaryController = require("../controllers/uploadCloudinaryContr
 // const {uploadByLink, uploadDirect, removeDirect} = uploadController
 const {uploadByLink, uploadDirect, removeDirect} = uploadCloudinaryController
 
-const {uploadToLocal} = require('../middleware/photosMiddleware')
+// const {uploadToLocal} = require('../middleware/photosMiddleware')
+const {uploadToLocal} = require('../middleware/photosMiddlewareCloudinary')
 
 
 router.route('/by-link')

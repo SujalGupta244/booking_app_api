@@ -10,14 +10,14 @@ const asyncHandler = require('express-async-handler')
 const register = asyncHandler(async (req, res) =>{
     const {username, email, password} = req.body
     if(!username || !email || !password){
-        res.status(400).json({message: "some fields are missing"}); // 400 bad request
+        return res.status(400).json({message: "some fields are missing"}); // 400 bad request
     }
     
     // Check for duplicate
     const duplicate = await User.findOne({email}).collation({locale: "en", strength: 2}).lean().exec();
 
     if(duplicate){
-        res.status(422).json({message: "User with this email already exists"}); // 422 Unprocessable Content request
+        return res.status(422).json({message: "User with this email already exists"}); // 422 Unprocessable Content request
     }
 
     // Hash Password
@@ -29,9 +29,9 @@ const register = asyncHandler(async (req, res) =>{
     const user = await User.create(userObject)
 
     if(user){ // if created
-        res.status(201).json({message: `new user ${username} created`}) // 201 new creation request
+        return res.status(201).json({message: `new user ${username} created`}) // 201 new creation request
     }else{
-        res.status(400).json({message: "Invalid user data received"}); // 400 bad request
+        return res.status(400).json({message: "Invalid user data received"}); // 400 bad request
     }
 })
 
@@ -41,21 +41,21 @@ const register = asyncHandler(async (req, res) =>{
 const login = asyncHandler(async (req, res) =>{
     const {email, password} = req.body
     if( !email || !password){
-        res.status(400).json({message: "some fields are missing"}); // 400 bad request
+        return res.status(400).json({message: "some fields are missing"}); // 400 bad request
     }
 
     // Find and store existing user
     const user = await User.findOne({email}).lean()
 
     if(!user){
-        res.status(401).json({message: "Unauthorized"}) // 401 Unauthorised access
+        return res.status(401).json({message: "Unauthorized"}) // 401 Unauthorised access
     }
     
     // Checks the password
     const match = await bcrypt.compare(password, user.password)
 
     if(!match){
-        res.status(409).json({message: "Username/password is Invalid"}); // 409 Unauthorized request
+        return res.status(409).json({message: "Username/password is Invalid"}); // 409 Unauthorized request
     }
 
     const responseToken = jwt.sign(

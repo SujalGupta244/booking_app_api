@@ -30,6 +30,45 @@ const getBookingsOfUser = async(req, res) =>{
 }
 
 
+const deleteBookingOfUser = async(req, res) =>{
+    const cookies = req.cookies
+    const booking_id = req.body.booking_id
+
+    if(!cookies?.jwt) res.status(401).json({message: "Unauthorized, You are not loggedIn"}) // 401 Unauthorized
+    const refreshToken = cookies.jwt
+    
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_KEY,
+        asyncHandler(async(err, decoded) =>{
+            if(err) return res.status(403).json({message: "Forbidden"})
+            
+            const foundUser = await User.findOne({email: decoded.email})
+            // .populate('places')
+
+            if(!foundUser) return res.status(401).json({message: "Unauthorized"})
+
+            const bookings = await Booking.find({user: foundUser._id})
+            
+            if(!bookings) res.status(403).json({message: "No bookings"})
+            
+            const newBookings = bookings.filter(booking => booking._id != booking_id)
+            const bookingDelete = await Booking.deleteOne({_id : booking_id})
+
+            if(!bookingDelete){
+                res.status(400).json({message: "Invalid booking ID"})
+            }
+
+            foundUser.bookings = newBookings;
+            foundUser.save()
+            // console.log(newBookings)
+            res.json({message:"booking deleted successfully"})
+            
+        })
+    )
+}
+
+
 
 
 const bookPlace = async(req, res) =>{
@@ -77,4 +116,4 @@ const bookPlace = async(req, res) =>{
 
 } 
 
-module.exports = {getBookingsOfUser ,bookPlace}
+module.exports = {getBookingsOfUser ,bookPlace, deleteBookingOfUser}

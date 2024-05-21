@@ -46,7 +46,10 @@ app.use('/auth', require('./routes/authRoutes'))
 app.use('/upload', require("./routes/uploadRouter"))
 
 app.use('/places', require("./routes/placesRouter"))
+
 app.use('/booking', require("./routes/bookingRouter"))
+
+app.use('/paypal', require("./routes/paypalRouter"))
 
 
 // For any route not known 

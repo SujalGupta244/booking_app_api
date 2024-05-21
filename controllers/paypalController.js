@@ -78,11 +78,11 @@ const captureOrder = async (req, res)=>{
     const response = await axios.request(config)
     
     const data = await response.data
-    console.log(data)
+    // console.log(data)
     return res.send(data);
     
   }catch(err){
-    console.log(err.message)
+    // console.log(err.message)
     return res.send(err);
   }
 };
